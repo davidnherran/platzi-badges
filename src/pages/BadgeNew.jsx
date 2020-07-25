@@ -8,11 +8,11 @@ import "./styles/BadgeNew.css";
 class BadgeNew extends Component {
   state = {
     form: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      jobTitle: '',
-      tagName: '',
+      firstName: "",
+      lastName: "",
+      email: "",
+      jobTitle: "",
+      tagName: "",
     },
   };
 
