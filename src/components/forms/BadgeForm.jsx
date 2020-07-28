@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 
 export default class BadgeForm extends Component {
-
   handleSubmit = (e) => {
     e.preventDefault();
   };
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <h1>New Attendant</h1>
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
@@ -68,7 +67,7 @@ export default class BadgeForm extends Component {
             Save
           </button>
         </form>
-      </div>
+      </React.Fragment>
     );
   }
 }
