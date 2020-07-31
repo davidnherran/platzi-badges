@@ -3,67 +3,51 @@ import "./styles/Badges.css";
 import confLogo from "../images/badge-header.svg";
 import BadgeList from "../components/badge/BadgeList";
 import { Link } from "react-router-dom";
+import Loader from "react-loader-spinner";
 
 export default class Badges extends Component {
   state = {
+    page: 1,
+    loading: true,
+    error: null,
     data: {
       results: [],
     },
   };
-
-  /* componentDidMount() {
-    setTimeout(() => {
-      this.setState({
-        data: [
-          {
-            id: "2de30c42-9deb-40fc-a41f-05e62b5939a7",
-            firstName: "Freda",
-            lastName: "Grady",
-            email: "Leann_Berge@gmail.com",
-            jobTitle: "Legacy Brand Director",
-            tagName: "FredaGrady22221-7573",
-            avatarUrl:
-              "https://www.gravatar.com/avatar/f63a9c45aca0e7e7de0782a6b1dff40b?d=identicon",
-          },
-          {
-            id: "d00d3614-101a-44ca-b6c2-0be075aeed3d",
-            firstName: "Major",
-            lastName: "Rodriguez",
-            email: "Ilene66@hotmail.com",
-            jobTitle: "Human Research Architect",
-            tagName: "ajorRodriguez61545",
-            avatarUrl:
-              "https://www.gravatar.com/avatar/d57a8be8cb9219609905da25d5f3e50a?d=identicon",
-          },
-          {
-            id: "63c03386-33a2-4512-9ac1-354ad7bec5e9",
-            firstName: "Daphney",
-            lastName: "Torphy",
-            email: "Ron61@hotmail.com",
-            jobTitle: "National Markets Officer",
-            tagName: "DaphneyTorphy96105",
-            avatarUrl:
-              "https://www.gravatar.com/avatar/e74e87d40e55b9ff9791c78892e55cb7?d=identicon",
-          },
-        ],
-      });
-    }, 3000);
-  } */
 
   componentDidMount() {
     this.fetchCharacters();
   }
 
   fetchCharacters = async () => {
-    const response = await fetch("https://rickandmortyapi.com/api/character");
-    const data = await response.json();
+    this.setState({ loading: true, error: null });
 
-    this.setState({
-      data: data,
-    });
+    try {
+      const response = await fetch(`https://rickandmortyapi.com/api/character?page=${this.state.page}`);
+      const data = await response.json();
+      this.setState({
+        loading: false,
+        data: {
+          info: data.info,
+          results: [].concat(
+            this.state.data.results, data.results
+          )
+        },
+        page: this.state.page + 1,
+      });
+    } catch (err) {
+      this.setState({
+        loading: false,
+        error: err,
+      });
+    }
   };
 
   render() {
+    if (this.state.error) {
+      return `Error: ${this.state.error.message}`;
+    }
+
     return (
       <div>
         <div className="Badges">
@@ -90,6 +74,22 @@ export default class Badges extends Component {
               <BadgeList badges={this.state.data} />
             </div>
           </div>
+
+          {this.state.loading && (
+            <div className="text-center">
+              <Loader
+                type="Puff"
+                color="#00BFFF"
+                height={100}
+                width={100}
+                timeout={3000}
+              />
+            </div>
+          )}
+
+          {!this.state.loading && (
+            <button className="btn btn-primary" onClick={() => this.fetchCharacters()}>Load More</button>
+          )}
         </div>
       </div>
     );
