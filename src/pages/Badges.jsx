@@ -5,14 +5,13 @@ import BadgeList from "../components/badge/BadgeList";
 import { Link } from "react-router-dom";
 
 export default class Badges extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [],
-    };
-  }
+  state = {
+    data: {
+      results: [],
+    },
+  };
 
-  componentDidMount() {
+  /* componentDidMount() {
     setTimeout(() => {
       this.setState({
         data: [
@@ -49,7 +48,20 @@ export default class Badges extends Component {
         ],
       });
     }, 3000);
+  } */
+
+  componentDidMount() {
+    this.fetchCharacters();
   }
+
+  fetchCharacters = async () => {
+    const response = await fetch("https://rickandmortyapi.com/api/character");
+    const data = await response.json();
+
+    this.setState({
+      data: data,
+    });
+  };
 
   render() {
     return (
