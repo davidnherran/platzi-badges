@@ -23,15 +23,15 @@ export default class Badges extends Component {
     this.setState({ loading: true, error: null });
 
     try {
-      const response = await fetch(`https://rickandmortyapi.com/api/character?page=${this.state.page}`);
+      const response = await fetch(
+        `https://rickandmortyapi.com/api/character?page=${this.state.page}`
+      );
       const data = await response.json();
       this.setState({
         loading: false,
         data: {
           info: data.info,
-          results: [].concat(
-            this.state.data.results, data.results
-          )
+          results: [].concat(this.state.data.results, data.results),
         },
         page: this.state.page + 1,
       });
@@ -63,16 +63,23 @@ export default class Badges extends Component {
         </div>
 
         <div className="Badges__container">
-          <div className="Badges__buttons">
-            <Link to="/badges/new" className="btn btn-primary">
-              New Badge
-            </Link>
-          </div>
-
           <div className="Badges__list">
             <div className="Badges__container">
+              <div className="Badges__buttons">
+                <Link to="/badges/new" className="btn btn-primary">
+                  New Badge
+                </Link>
+              </div>
               <BadgeList badges={this.state.data} />
             </div>
+            {!this.state.loading && (
+              <button
+                className="btn btn-primary mb-5 mt-2 ml-3"
+                onClick={() => this.fetchCharacters()}
+              >
+                Load More
+              </button>
+            )}
           </div>
 
           {this.state.loading && (
@@ -85,10 +92,6 @@ export default class Badges extends Component {
                 timeout={3000}
               />
             </div>
-          )}
-
-          {!this.state.loading && (
-            <button className="btn btn-primary" onClick={() => this.fetchCharacters()}>Load More</button>
           )}
         </div>
       </div>

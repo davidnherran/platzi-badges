@@ -28,7 +28,7 @@ class BadgeNew extends Component {
     return (
       <React.Fragment>
         <div className="BadgeNew__hero">
-          <img className="img-fluid" src={header} alt="Hero" />
+          <img className="img-fluid pl-5" src={header} alt="Hero" />
         </div>
         <div className="container">
           <div className="row">
@@ -42,7 +42,7 @@ class BadgeNew extends Component {
                 avatarURL="https://icon-library.com/images/avatar-icon/avatar-icon-6.jpg"
               />
             </div>
-            <div className="col-6">
+            <div className="col-6 mb-5">
               <BadgeForm
                 onChange={this.handleChange}
                 formValues={this.state.form}

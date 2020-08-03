@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class BadgeForm extends Component {
   handleSubmit = (e) => {
@@ -63,9 +64,11 @@ export default class BadgeForm extends Component {
               value={this.props.formValues.tagName}
             />
           </div>
-          <button onClick={this.handleClick} className="btn btn-primary">
-            Save
-          </button>
+          <Link to="/">
+            <button onClick={this.handleClick} className="btn btn-primary">
+              Save
+            </button>
+          </Link>
         </form>
       </React.Fragment>
     );
