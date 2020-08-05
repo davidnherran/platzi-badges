@@ -30,7 +30,13 @@ class BadgeNew extends Component {
         <div className="BadgeNew__hero">
           <img className="img-fluid pl-5" src={header} alt="Hero" />
         </div>
+
         <div className="container">
+          <div class="alert alert-warning" role="alert">
+            The profile created will not be sent to the list of attendees, the
+            project is only a small demonstration of what can be achieved in
+            React JS.
+          </div>
           <div className="row">
             <div className="col-6">
               <Badge
